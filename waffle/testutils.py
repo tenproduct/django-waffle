@@ -1,5 +1,6 @@
 from functools import wraps
 
+from django.contrib.sites.models import Site
 from waffle.models import Flag, Switch, Sample
 
 
@@ -10,6 +11,8 @@ class _overrider(object):
     def __init__(self, name, active, site=None):
         self.name = name
         self.active = active
+        if not site:
+            site = Site.objects.get_current()
         self.site = site
 
     def __call__(self, func):
@@ -20,7 +23,7 @@ class _overrider(object):
         return _wrapped
 
     def get(self):
-        self.obj, self.created = self.cls.objects.get_or_create(name=self.name)
+        self.obj, self.created = self.cls.objects.get_or_create(name=self.name, site=self.site)
 
     def update(self, active):
         raise NotImplementedError
