@@ -1,6 +1,5 @@
 from functools import wraps
 
-from django.contrib.sites.models import Site
 from waffle.models import Flag, Switch, Sample
 
 
@@ -12,6 +11,7 @@ class _overrider(object):
         self.name = name
         self.active = active
         if not site:
+            from django.contrib.sites.models import Site
             site = Site.objects.get_current()
         self.site = site
 
