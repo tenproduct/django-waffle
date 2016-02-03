@@ -2,7 +2,6 @@ from decimal import Decimal
 import random
 
 from waffle.utils import get_setting, keyfmt
-from django.contrib.sites.models import Site
 
 
 VERSION = (0, 10, 1)
@@ -21,6 +20,7 @@ def flag_is_active(request, flag_name, current_site=None, site_is_none=False):
     unless site_is_none is True, then look for a flag with no site.
 
     """
+    from django.contrib.sites.models import Site
     from .models import cache_flag, Flag
     from .compat import cache
 
@@ -121,6 +121,7 @@ def switch_is_active(switch_name, current_site=None, site_is_none=False):
     unless site_is_none is True, then look for a switch with no site.
 
     """
+    from django.contrib.sites.models import Site
     from .models import cache_switch, Switch
     from .compat import cache
 
@@ -148,6 +149,7 @@ def sample_is_active(sample_name, current_site=None, site_is_none=None):
     unless site_is_none is True, then look for a sample with no site.
 
     """
+    from django.contrib.sites.models import Site
     from .models import cache_sample, Sample
     from .compat import cache
 
